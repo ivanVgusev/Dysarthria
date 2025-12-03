@@ -12,9 +12,8 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras import regularizers
 
 
-# ============================
+
 # 1. FEATURE EXTRACTION
-# ============================
 
 def extract_features(path):
     try:
@@ -78,9 +77,7 @@ def feature_extraction(df):
     return dataf
 
 
-# ============================
 # 2. LOAD DATA
-# ============================
 
 df = pd.read_csv("dataset/data_more_info.csv")
 dataf = feature_extraction(df)
@@ -94,9 +91,7 @@ feature_cols = [c for c in dataf.columns if c not in ["class", "speaker_id"]]
 input_dim = len(feature_cols)
 
 
-# ============================
 # 3. MLP MODEL
-# ============================
 
 def create_mlp(input_dim):
     model = Sequential([
@@ -123,9 +118,7 @@ def create_mlp(input_dim):
     return model
 
 
-# ============================
 # 4. CROSS-VALIDATION
-# ============================
 
 speakers_0 = dataf[dataf["class"] == 0.0]["speaker_id"].unique()
 speakers_1 = dataf[dataf["class"] == 1.0]["speaker_id"].unique()
