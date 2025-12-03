@@ -8,9 +8,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import InputLayer, Conv2D, MaxPooling2D, Dense, Flatten
 
 
-# ============================
 # 1. FEATURE EXTRACTION
-# ============================
 
 def feature_extraction(df):
     nums_left_out = 0
@@ -42,9 +40,7 @@ def feature_extraction(df):
     return dataf
 
 
-# ============================
-# 2. ЗАГРУЗКА CSV
-# ============================
+# 2. CSV LOADING
 
 df = pd.read_csv("dataset/data_more_info.csv")
 dataf = feature_extraction(df)
@@ -54,9 +50,7 @@ dataf.loc[dataf['class'] == 'dysarthria', 'class'] = 1.0
 dataf['class'] = dataf['class'].astype(float)
 
 
-# ============================
-# 3. МОДЕЛЬ
-# ============================
+# 3. MODEL
 
 def create_model():
     model = Sequential([
@@ -76,9 +70,7 @@ def create_model():
     return model
 
 
-# ============================
-# 4. ПОЛНОЕ ПЕРЕБОРНОЕ HOLDOUT-ТЕСТИРОВАНИЕ
-# ============================
+# 4. FULL CV TESTING
 
 speakers_0 = dataf[dataf['class'] == 0.0]['speaker_id'].unique()
 speakers_1 = dataf[dataf['class'] == 1.0]['speaker_id'].unique()
