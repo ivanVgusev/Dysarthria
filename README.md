@@ -80,7 +80,7 @@ print("Средняя точность по всем парам дикторов
 
 3) Средний recall по всем парам дикторов: 0.7489537753121956
 
-### speaker_CV_broaden_features.py
+### LTSO_mlp.py
 
 Расширяет список рассматриваемых характеристик (в оригинальной работе только mean MFCC), добавляет: 
 
@@ -132,6 +132,8 @@ def extract_features(path):
     return np.array(feats)
 ```
 
+А также сменяет алгоритм на многослойный персептрон
+
 <b> Результаты показали: </b>
 
 1) Средний accuracy: 0.8658976645093469
@@ -139,6 +141,25 @@ def extract_features(path):
 2) Средний precision: 0.8254479456766258
 
 3) Средний recall: 0.9768521345949631
+
+### LTSO_xbgoost.py
+
+Использует тот же расширенный набор признаков, что и `LTSO_mlp.py` (MFCC + delta + delta-delta, спектральные признаки, RMS, ZCR, chroma), но вместо MLP применяет модель `XGBClassifier` (XGBoost).
+
+Гиперпараметры XGBoost (как в коде):
+- `n_estimators=400`, `max_depth=6`, `learning_rate=0.05`
+- `subsample=0.9`, `colsample_bytree=0.9`
+- `eval_metric="logloss"`
+
+Перед обучением признаки стандартизируются (`StandardScaler`), оценка проводится в speaker-independent постановке leave-two-speakers-out (LTSO), как и в других экспериментах проекта.
+
+<b> Результаты показали (LTSO): </b>
+
+1) Средний accuracy: 0.8255637953193341
+
+2) Средний precision: 0.807533165511469
+
+3) Средний recall: 0.9655659773884011
 
 
 ==================================================
